@@ -1,5 +1,25 @@
+section.introduction{
+	div.header_picture{
+		width: 100%;
+		height: 400px;
+		background-image: url('../../assets/Images/BG_Intro.jpg');
+		background-size: cover;
+		background-position: center center;
+	}
+	img{
+		width: 90%;
+		max-width: 400px;
+		margin: -75px auto 0 auto;
+		display: block;
+	}
+}
+
 h1{
-font-family: 'JosefinSans'
+	font-family: 'JosefinSlab';
+	font-weight: 800;
+}
 
-
+p{
+	font-family: 'JosefinSans';
+	font-weight: 400;
 }
