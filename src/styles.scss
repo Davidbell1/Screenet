@@ -1,9 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
-@font-face {
-    font-family: 'JosefinSans';
-    src: url(./src/assets/Font/JosefinSans/JosefinSans.ttf);
-    src: url(./src/assets/Font/JosefinSans/JosefinSans.svg);
-    src: url(./src/assets/Font/JosefinSans/JosefinSans.woff);
-    src: url(./src/assets/Font/JosefinSans/JosefinSans.woff2); 
+html, body{
+	margin: 0;
+}
+
+@font-face { 
+    font-family: 'JosefinSans'; 
+    src: url('/assets/fonts/Josephin_sans/Regular/josefinsans_regular.eot'); 
+    src: url('/assets/fonts/Josephin_sans/Regular/josefinsans_regular?#iefix') format('embedded-opentype'), 
+         url('/assets/fonts/Josephin_sans/Regular/josefinsans_regular.woff') format('woff'), 
+         url('/assets/fonts/Josephin_sans/Regular/josefinsans_regular.ttf') format('truetype'), 
+         url('/assets/fonts/Josephin_sans/Regular/josefinsans_regular.svg#JosefinSans') format('svg');
     font-weight: 400;
+    font-style: normal;
+}
+@font-face { 
+    font-family: 'JosefinSlab'; 
+    src: url('/assets/fonts/Josephin_slab/Semi_bold/josefinslab_semi_bold.eot'); 
+    src: url('/assets/fonts/Josephin_slab/Semi_bold/josefinslab_semi_bold?#iefix') format('embedded-opentype'), 
+         url('/assets/fonts/Josephin_slab/Semi_bold/josefinslab_semi_bold.woff') format('woff'), 
+         url('/assets/fonts/Josephin_slab/Semi_bold/josefinslab_semi_bold.ttf') format('truetype'), 
+         url('/assets/fonts/Josephin_slab/Semi_bold/josefinslab_semi_bold.svg#JosefinSans') format('svg');
+    font-weight: 800;
+    font-style: normal;
+}
+@font-face { 
+    font-family: 'JosefinSlab'; 
+    src: url('/assets/fonts/Josephin_slab/Bold/josefinslab_bold.eot'); 
+    src: url('/assets/fonts/Josephin_slab/Bold/josefinslab_bold?#iefix') format('embedded-opentype'), 
+         url('/assets/fonts/Josephin_slab/Bold/josefinslab_bold.woff') format('woff'), 
+         url('/assets/fonts/Josephin_slab/Bold/josefinslab_bold.ttf') format('truetype'), 
+         url('/assets/fonts/Josephin_slab/Bold/josefinslab_bold.svg#JosefinSans') format('svg');
+    font-weight: 600;
+    font-style: normal;
 }
