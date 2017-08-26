@@ -42,10 +42,10 @@ section.questionnaire{
 			color: #8e8e8e;
 		}
 		ul{
-			width: 90%;
+			width: 100%;
 			max-width: 400px;
 			margin: 50px auto 0;
-
+			padding: 0;
 		
 			li{
 				width: 100%;
@@ -53,7 +53,7 @@ section.questionnaire{
 				margin: 20px 0; 
 
 				a{
-					width: 90%;
+					width: calc(100% - 40px);
 					margin: 0 auto;
 					display: block;
 					color: #4f4f4f;
@@ -79,6 +79,65 @@ section.questionnaire{
 						&:hover{
 							opacity: 0.8;
 						}
+					}
+				}
+			}
+		}
+		div.button_container{
+			overflow: auto;
+			margin: 100px auto 70px;
+
+			a.back{
+				width: 90%;
+				max-width: 100px;
+				margin: 0 auto;
+				display: block;
+				color: #4f4f4f;
+				font-family: 'JosefinSlab';
+				text-decoration: none;
+				font-size: 20px;
+				text-align: center;
+				padding: 12px 20px;
+				border-radius: 4px;
+				background: #f2f2f2; 
+				box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+				transition: all 200ms;
+				cursor: pointer;
+				float: left;
+
+
+				&:hover{
+					box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+				}
+			}
+			a.next{
+				width: 90%;
+				max-width: 100px;
+				margin: 0 auto;
+				display: block;
+				font-family: 'JosefinSlab';
+				text-decoration: none;
+				font-size: 20px;
+				text-align: center;
+				padding: 12px 20px;
+				border-radius: 4px;
+				background: linear-gradient(to right, #30c0d8, #30c0af);
+				color: white; 
+				box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+				transition: all 200ms;
+				cursor: not-allowed;
+				opacity: 0.4;
+				float: right;
+
+				&:hover{
+					opacity: 0.5;
+				}
+				&.active{
+					opacity: 1;
+					cursor: pointer;
+
+					&:hover{
+						opacity: 0.8;
 					}
 				}
 			}
