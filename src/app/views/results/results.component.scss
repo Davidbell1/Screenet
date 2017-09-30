@@ -32,6 +32,10 @@ section.introduction_text{
 			margin: 0 auto 20px auto;
 			font-size: 30px;
 			color: #4f4f4f;
+
+			span.blue{
+				color: #30c0d8;
+			}
 		}
 		p{
 			font-family:'JosefinSans';
@@ -44,78 +48,25 @@ section.introduction_text{
 	}
 }
 
-section.key_points{
-	div.inner_container{
+section.map_container{
+	div.title_container{
 		width: 90%;
 		max-width: 1000px;
-		margin: 0 auto;
+		margin: 50px auto;
 
-		ul{
-			margin: 0 auto;
-			padding: 0;
+		h1{
+			font-family:'JosefinSlab';
+			font-weight: 800;
 			width: 90%;
-	
-			li{
-				margin: 40px auto;
-				padding: 0;
-				list-style-type: none;
-				overflow: auto;
-				display: flex;
-				flex-flow: row wrap;
-
-				div.image_container{
-					width: 75px;
-					margin-right: 10px;
-					display: flex;
-					align-items: center;
-
-					img{
-						width: 100%;
-					}
-				}
-
-				p{
-					width: calc(100% - 85px);
-					float: right;
-					font-family:'JosefinSans';
-					font-weight: 400;
-					font-size: 16px;
-					color: #8e8e8e;
-					margin: 0;
-				}
-			}
+			margin: 0 auto 20px auto;
+			font-size: 30px;
+			color: #30c0d8;
 		}
 	}
-}
-
-section.take_the_test{
-	padding: 50px 0 100px;
-
-	div.inner_container{
-		width: 90%;
-		max-width: 400px;
-		margin: 0px auto;
-
-		a{
-			width: 100%;
-			margin: 0 auto;
-			display: block;
-			color: white;
-			font-family: 'JosefinSlab';
-			text-decoration: none;
-			font-size: 30px;
-			text-align: center;
-			padding: 12px 0;
-			border-radius: 4px;
-			background: linear-gradient(to right, #30c0d8, #30c0af); 
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-			transition: all 200ms;
-			cursor: pointer;
-
-			&:hover{
-				opacity: 0.8;
-			}
-		}
+	.map{
+		width: 100%;
+		height: 60vh;
+		background-color: #f2f2f2;
 	}
 }
 
@@ -162,40 +113,6 @@ footer{
 			height: 300px;
 		}
 		img{}
-	}
-	
-	section.introduction_text{
-		div.inner_container{
-			h1{}
-			p{}
-		}
-	
-	}
-	
-	section.key_points{
-		div.inner_container{
-			ul{
-				display: flex;
-
-				li{
-					width: calc(33% - 40px);
-
-					div.image_container{
-						align-items: flex-start;
-						img{}	
-					}
-					p{}
-				}
-			}
-		}
-	}
-	
-	section.take_the_test{
-		div.inner_container{
-			a{
-				&:hover{}
-			}
-		}
 	}
 	
 	footer{
