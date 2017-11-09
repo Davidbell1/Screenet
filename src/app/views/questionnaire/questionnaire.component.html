@@ -3,19 +3,19 @@
 	<img src="http://placehold.it/400x200" alt="logo screenet">
 </section>
 
-<section class="questionnaire">
-	
+<section class="questionnaire">	
 	<div class="inner_container">
 		<h1>{{questions[question_id].title}}</h1>
 		<p>{{questions[question_id].subtitle}}</p>
 		<ul>
-			<li *ngFor="let answer of questions[question_id].answers" (click)="save_answers(questions[question_id].id, answer.value)"> 
+
+			<li *ngFor="let answer of questions[question_id].answers" (click)="save_answer( questions[question_id].id, answer.value )">
 				<a [ngClass]="{'active': (results[questions[question_id].id] == answer.value) }">{{answer.label}}</a>
 			</li>
 		</ul>
 		<div class="button_container">
-			<a class="back" *ngIf="question_id >= 1" (click)="back()">back</a>
-			<a class="next" [ngClass]="{'active': results[questions[question_id].id]}" (click)="next()">next</a>
+			<a class="back" *ngIf="question_id >= 1" (click)="back()">Back</a>
+			<a class="next" [ngClass]="{'active': results[questions[question_id].id]}" (click)="next()">Next</a>
 		</div>
 	</div>
 </section>

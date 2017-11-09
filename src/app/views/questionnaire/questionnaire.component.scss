@@ -1,3 +1,6 @@
+/*
+    PHONE VERSION
+*/
 section.introduction{
 	div.header_picture{
 		width: 100%;
@@ -16,10 +19,12 @@ section.introduction{
 
 section.questionnaire{
 	padding: 100px 0 50px;
+
 	div.inner_container{ 
 		width: 90%;
 		max-width: 1000px;
 		margin: 0 auto;
+
 		h1{
 			font-family:'JosefinSlab';
 			font-weight: 800;
@@ -41,19 +46,19 @@ section.questionnaire{
 			max-width: 400px;
 			margin: 50px auto 0;
 			padding: 0;
+		
 			li{
 				width: 100%;
 				list-style-type: none;
-				margin: 20px 0 20px 0;
+				margin: 20px 0; 
+
 				a{
 					width: calc(100% - 40px);
-					padding: 12px 20px;
 					margin: 0 auto;
 					display: block;
 					color: #4f4f4f;
-					font-family:'JosefinSlab';
+					font-family: 'JosefinSlab';
 					text-decoration: none;
-					width: calc(100% - 40px);
 					font-size: 20px;
 					text-align: center;
 					padding: 12px 20px;
@@ -70,6 +75,7 @@ section.questionnaire{
 						background: linear-gradient(to right, #30c0d8, #30c0af);
 						color: white;
 						box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
 						&:hover{
 							opacity: 0.8;
 						}
@@ -77,69 +83,67 @@ section.questionnaire{
 				}
 			}
 		}
-	div.button_container{
-overflow: auto;
-margin: 100px auto 70px;
+		div.button_container{
+			overflow: auto;
+			margin: 100px auto 70px;
 
-a.back{
-width: 90%;
-max-width: 100px;
-margin: 0 auto;
-display: block;
-color: #4f4f4f;
-font-family: 'JosefinSlab';
-text-decoration: none;
-font-size: 20px;
-text-align: center;
-padding: 12px 20px;
-border-radius: 4px;
-background: #f2f2f2; 
-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-transition: all 200ms;
-cursor: pointer;
-float: left;
-
-
-&:hover{
-box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-}
-}
-a.next{
-width: 90%;
-max-width: 100px;
-margin: 0 auto;
-display: block;
-font-family: 'JosefinSlab';
-text-decoration: none;
-font-size: 20px;
-text-align: center;
-padding: 12px 20px;
-border-radius: 4px;
-background: linear-gradient(to right, #30c0d8, #30c0af);
-color: white; 
-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-transition: all 200ms;
-cursor: not-allowed;
-opacity: 0.4;
-float: right;
-
-&:hover{
-opacity: 0.5;
-}
-&.active{
-opacity: 1;
-cursor: pointer;
-
-&:hover{
-opacity: 0.8;
-}
-}
-}
-}
-	} 
-}
+			a.back{
+				width: 90%;
+				max-width: 100px;
+				margin: 0 auto;
+				display: block;
+				color: #4f4f4f;
+				font-family: 'JosefinSlab';
+				text-decoration: none;
+				font-size: 20px;
+				text-align: center;
+				padding: 12px 20px;
+				border-radius: 4px;
+				background: #f2f2f2; 
+				box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+				transition: all 200ms;
+				cursor: pointer;
+				float: left;
 
 
+				&:hover{
+					box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+				}
+			}
+			a.next{
+				width: 90%;
+				max-width: 100px;
+				margin: 0 auto;
+				display: block;
+				font-family: 'JosefinSlab';
+				text-decoration: none;
+				font-size: 20px;
+				text-align: center;
+				padding: 12px 20px;
+				border-radius: 4px;
+				background: linear-gradient(to right, #30c0d8, #30c0af);
+				color: white; 
+				box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+				transition: all 200ms;
+				cursor: not-allowed;
+				opacity: 0.4;
+				float: right;
+
+				&:hover{
+					opacity: 0.5;
+				}
+				&.active{
+					opacity: 1;
+					cursor: pointer;
+
+					&:hover{
+						opacity: 0.8;
+					}
+				}
+			}
+		}
+	}
+}
 
 footer{
 	position: relative;
@@ -155,7 +159,6 @@ footer{
 		font-family: 'JosefinSans';
 		z-index: 2;
 		position: relative;
-
 	}
 	&:before{
 		content: '';
@@ -171,36 +174,44 @@ footer{
 }
 
 /*
-    TABLET VERSION
+    TABLET VERSION
 */
 @media screen and (min-width: 768px ){}
+
+
 /*
-    SMALL SCREEN COMPUTER VERSION
+    SMALL SCREEN COMPUTER VERSION
 */
 @media screen and (min-width: 992px ){
-
+	section.introduction{
+		div.header_picture{
+			height: 300px;
+		}
+		img{}
+	}
+	
 	footer{
-
 		p{}
 		&:before{
 			top: -30px;
 		}
 	}
 }
+
 /*
-    LARGE SCREEN COMPUTER VERSION
+    LARGE SCREEN COMPUTER VERSION
 */
 @media screen and (min-width: 1200px ){
-
 	footer{
-
 		p{}
 		&:before{
 			transform: skewY(-2deg);
 		}
 	}
 }
+
+
 /*
-    SUPER LARGE SCREEN COMPUTER VERSION
+    SUPER LARGE SCREEN COMPUTER VERSION
 */
 @media screen and (min-width: 1600px ){}

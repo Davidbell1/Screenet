@@ -1,3 +1,6 @@
+/*
+    PHONE VERSION
+*/
 section.introduction{
 	div.header_picture{
 		width: 100%;
@@ -20,7 +23,7 @@ section.introduction_text{
 	div.inner_container{
 		width: 90%;
 		max-width: 1000px;
-		margin: 0px auto;
+		margin: 0 auto;
 
 		h1{
 			font-family:'JosefinSlab';
@@ -37,25 +40,24 @@ section.introduction_text{
 			margin: 0 auto;
 			font-size: 20px;
 			color: #8e8e8e;
-		}	
+		}
 	}
 
-	
 }
 
 section.key_points{
-
 	div.inner_container{
 		width: 90%;
 		max-width: 1000px;
-		margin: 0px auto;
+		margin: 0 auto;
+
 		ul{
 			margin: 0 auto;
 			padding: 0;
 			width: 90%;
-
+	
 			li{
-				margin: 0;
+				margin: 40px auto;
 				padding: 0;
 				list-style-type: none;
 				overflow: auto;
@@ -68,11 +70,11 @@ section.key_points{
 					display: flex;
 					align-items: center;
 
-
-					img{	
-						width: 100%;				
+					img{
+						width: 100%;
 					}
 				}
+
 				p{
 					width: calc(100% - 85px);
 					float: right;
@@ -80,8 +82,8 @@ section.key_points{
 					font-weight: 400;
 					font-size: 16px;
 					color: #8e8e8e;
+					margin: 0;
 				}
-
 			}
 		}
 	}
@@ -114,7 +116,6 @@ section.take_the_test{
 			&:hover{
 				opacity: 0.8;
 			}
-
 		}
 	}
 }
@@ -133,7 +134,6 @@ footer{
 		font-family: 'JosefinSans';
 		z-index: 2;
 		position: relative;
-
 	}
 	&:before{
 		content: '';
@@ -149,16 +149,31 @@ footer{
 }
 
 /*
-    TABLET VERSION
+    TABLET VERSION
 */
 @media screen and (min-width: 768px ){}
+
+
 /*
-    SMALL SCREEN COMPUTER VERSION
+    SMALL SCREEN COMPUTER VERSION
 */
 @media screen and (min-width: 992px ){
-
+	section.introduction{
+		div.header_picture{
+			height: 300px;
+		}
+		img{}
+	}
+	
+	section.introduction_text{
+		div.inner_container{
+			h1{}
+			p{}
+		}
+	
+	}
+	
 	section.key_points{
-
 		div.inner_container{
 			ul{
 				display: flex;
@@ -168,37 +183,42 @@ footer{
 
 					div.image_container{
 						align-items: flex-start;
-
 						img{}	
 					}
 					p{}
-
 				}
 			}
 		}
 	}
-
+	
+	section.take_the_test{
+		div.inner_container{
+			a{
+				&:hover{}
+			}
+		}
+	}
+	
 	footer{
-
 		p{}
 		&:before{
 			top: -30px;
 		}
 	}
 }
+
 /*
     LARGE SCREEN COMPUTER VERSION
 */
 @media screen and (min-width: 1200px ){
-
 	footer{
-
 		p{}
 		&:before{
 			transform: skewY(-2deg);
 		}
 	}
 }
+
 /*
     SUPER LARGE SCREEN COMPUTER VERSION
 */
