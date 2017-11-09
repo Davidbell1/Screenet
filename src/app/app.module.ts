@@ -5,18 +5,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './views/home/home.component';
 import { QuestionnaireComponent } from './views/questionnaire/questionnaire.component';
+import { ResultComponent } from './views/result/result.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '',   redirectTo: 'home', pathMatch: 'full' },
-  { path: 'questionnaire', component: QuestionnaireComponent }
+  { path: 'questionnaire', component: QuestionnaireComponent },
+  { path: 'results', component: ResultComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    QuestionnaireComponent
+    QuestionnaireComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,

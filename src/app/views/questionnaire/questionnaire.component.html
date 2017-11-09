@@ -6,37 +6,16 @@
 <section class="questionnaire">
 	
 	<div class="inner_container">
-		<h1>Lorem ipsum dolor sit amet.</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate nesciunt quia sed explicabo alias, laboriosam et quam fugiat consectetur harum eos, commodi, quibusdam assumenda molestiae repudiandae minima doloribus tempore distinctio.. </p>
+		<h1>{{questions[question_id].title}}</h1>
+		<p>{{questions[question_id].subtitle}}</p>
 		<ul>
-			<li> 
-			<a class="">
-				younger than 40
-			</a>
-			</li>
-			<li>
-				<a> 40-50
-				</a>
-			</li>
-			<li>
-				<a>
-					50-60
-				</a>
-			</li>
-			<li>
-				<a>
-					60-70
-				</a>
-			</li>
-			<li>
-				<a>
-					older than 70
-				</a>
+			<li *ngFor="let answer of questions[question_id].answers" (click)="save_answers(questions[question_id].id, answer.value)"> 
+				<a [ngClass]="{'active': (results[questions[question_id].id] == answer.value) }">{{answer.label}}</a>
 			</li>
 		</ul>
 		<div class="button_container">
-			<a class="back">back</a>
-			<a class="next">next</a>
+			<a class="back" *ngIf="question_id >= 1" (click)="back()">back</a>
+			<a class="next" [ngClass]="{'active': results[questions[question_id].id]}" (click)="next()">next</a>
 		</div>
 	</div>
 </section>
