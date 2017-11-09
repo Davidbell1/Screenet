@@ -1,7 +1,7 @@
 //introduction question
 export const INTRODUCTION_QUESTIONS ={
 	'question_0': {
-		id: 'question_0',
+		id: 'Howoldareyou?',
 		title: 'How old are you?',
 		subtitle: 'Your age help us determine the number of time you should check any sign of cancer.',
 		answers: [
@@ -33,7 +33,8 @@ export const INTRODUCTION_QUESTIONS ={
 				label: 'older than 75',
 				value: '> 75'
 			}
-		]
+		],
+		result: ''
 	},
 	'question_1': {
 		id: 'Whatsexareyou?',
@@ -42,13 +43,14 @@ export const INTRODUCTION_QUESTIONS ={
 		answers: [
 			{
 				label: 'Male',
-				value: 'male'
+				value: 'male1'
 			},
 			{
 				label: 'Female',
 				value: 'female'
 			}
-		]
+		],
+		result: ''
 	},
 };
 
@@ -73,7 +75,7 @@ export const WOMEN_TYPE_OF_CANCER =[
 			},
 			{
 				label: 'Melanoma (or >5 dysplastic naevi)',
-				value: 'melanoma'
+				value: 'melanoma1'
 			},
 			{
 				label: 'Non Melanomatous skin cancer',
@@ -85,7 +87,11 @@ export const WOMEN_TYPE_OF_CANCER =[
 			},
 			{
 				label: 'Cervical / a previous abnormal pap test',
-				value: 'pap test'
+				value: 'cervical'
+			},
+			{
+				label: 'Sarcoma',
+				value: 'sarcoma'
 			},
 			{
 				label: 'Other',
@@ -95,7 +101,8 @@ export const WOMEN_TYPE_OF_CANCER =[
 				label: 'None',
 				value: 'none'
 			}
-		]
+		],
+		result: ''
 	}
 ];
 
@@ -127,6 +134,10 @@ export const MAN_TYPE_OF_CANCER =[
 				value: 'non melanomatous'
 			},
 			{
+				label: 'Sarcoma',
+				value: 'sarcoma'
+			},
+			{
 				label: 'Other',
 				value: 'other'
 			},
@@ -134,7 +145,8 @@ export const MAN_TYPE_OF_CANCER =[
 				label: 'None',
 				value: 'none'
 			}
-		]
+		],
+		result: ''
 	}
 ];
 
@@ -153,7 +165,8 @@ export const INTRODUCTION_FIST_DEGREE_LOOP =[
 				label: 'No',
 				value: 'no'
 			}
-		]
+		],
+		result: ''
 	}
 ]
 
@@ -189,10 +202,15 @@ export const FIST_DEGREE_LOOP =[
 				value: 'other skin cancer'
 			},
 			{
+				label: 'Sarcoma',
+				value: 'sarcoma'
+			},
+			{
 				label: 'Other',
-				value: 'other'
+				value: 'other1'
 			}
-		]
+		],
+		result: ''
 	},
 	{
 		id: 'Howoldweretheywhendiagnosed?',
@@ -231,7 +249,8 @@ export const FIST_DEGREE_LOOP =[
 				label: 'Unknown',
 				value: 'unknown'
 			}
-		]
+		],
+		result: ''
 	},
 	{
 		id: 'Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?',
@@ -248,7 +267,7 @@ export const FIST_DEGREE_LOOP =[
 			},
 			{
 				label: '2',
-				value: '2'
+				value: '2x'
 			},
 			{
 				label: 'more than 2',
@@ -258,7 +277,8 @@ export const FIST_DEGREE_LOOP =[
 				label: 'Unknown',
 				value: 'unknown'
 			}
-		]
+		],
+		result: ''
 	},
 	{
 		id: 'Haveanyfirstdegreerelativeshadadifferentcancer?',
@@ -273,7 +293,8 @@ export const FIST_DEGREE_LOOP =[
 				label: 'No',
 				value: 'no'
 			}
-		]
+		],
+		result: ''
 	}
 ];
 
@@ -292,7 +313,8 @@ export const INTRODUCTION_SECOND_DEGREE_LOOP =[
 				label: 'No',
 				value: 'no'
 			}
-		]
+		],
+		result: ''
 	}
 ]
 
@@ -328,10 +350,15 @@ export const SECOND_DEGREE_LOOP =[
 				value: 'other skin cancer'
 			},
 			{
+				label: 'Sarcoma',
+				value: 'sarcoma'
+			},
+			{
 				label: 'Other',
-				value: 'other'
+				value: 'other1'
 			}
-		]
+		],
+		result: ''
 	},
 	{
 		id: 'Howoldweretheywhendiagnosed?',
@@ -370,7 +397,8 @@ export const SECOND_DEGREE_LOOP =[
 				label: 'Unknown',
 				value: 'unknown'
 			}
-		]
+		],
+		result: ''
 	},
 	{
 		id: 'Howmanyotherseconddegreerelativesonthesamesideofyourfamilyhadthesamecancer?',
@@ -387,7 +415,7 @@ export const SECOND_DEGREE_LOOP =[
 			},
 			{
 				label: '2',
-				value: '2'
+				value: '2x'
 			},
 			{
 				label: 'More than 2',
@@ -397,7 +425,8 @@ export const SECOND_DEGREE_LOOP =[
 				label: 'Unknown',
 				value: 'unknown'
 			}
-		]
+		],
+		result: ''
 	},
 	{
 		id: 'Haveanyseconddegreerelativeshadadifferentcancer?',
@@ -412,7 +441,8 @@ export const SECOND_DEGREE_LOOP =[
 				label: 'No',
 				value: 'no'
 			}
-		]
+		],
+		result: ''
 	}
 ];
 
@@ -455,7 +485,8 @@ export const CLOSURE_QUESTION =[
 				label: 'None',
 				value: 'none'
 			}
-		]
+		],
+		result: ''
 	}
 ]
 

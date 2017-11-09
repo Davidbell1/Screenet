@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { QuestionsService } from './services/questions/questions.service';
+
 import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
@@ -30,7 +32,9 @@ const routes: Routes = [
       apiKey: 'AIzaSyB93fKBqB2tVEJh3PBA3LV0n4Jl8bJIL3w '
     })
   ],
-  providers: [],
+  providers: [
+    QuestionsService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

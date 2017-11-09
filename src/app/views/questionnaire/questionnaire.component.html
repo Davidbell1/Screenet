@@ -9,7 +9,7 @@
 		<p>{{questions[question_id].subtitle}}</p>
 		<ul>
 			<li *ngFor="let answer of questions[question_id].answers" (click)="save_answer( question_id, answer.value )">
-				<a [ngClass]="{'active': (questions[question_id].result == answer.value) }">{{answer.label}}</a>
+				<a [ngClass]="{'active': (questions[question_id].result.indexOf(answer.value) > -1 ) }">{{answer.label}}</a>
 			</li>
 		</ul>
 		<div class="button_container">

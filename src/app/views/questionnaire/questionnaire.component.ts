@@ -2,10 +2,12 @@ import { ElementRef, Component, OnInit } from '@angular/core';
 import { INTRODUCTION_QUESTIONS, WOMEN_TYPE_OF_CANCER, MAN_TYPE_OF_CANCER, INTRODUCTION_FIST_DEGREE_LOOP, FIST_DEGREE_LOOP, INTRODUCTION_SECOND_DEGREE_LOOP, SECOND_DEGREE_LOOP, CLOSURE_QUESTION } from '../../../assets/json/questions';
 import { Router } from '@angular/router';
 
+import { QuestionsService } from '../../services/questions/questions.service';
+
 @Component({
 	selector: 'app-questionnaire',
 	templateUrl: './questionnaire.component.html',
-	styleUrls: ['./questionnaire.component.scss']
+	styleUrls: ['./questionnaire.component.scss'],
 })
 
 export class QuestionnaireComponent implements OnInit {
@@ -21,12 +23,32 @@ export class QuestionnaireComponent implements OnInit {
 	closure_question: any = CLOSURE_QUESTION;
 	question_history: any = [0];
 
-	constructor( private element: ElementRef, private router: Router ){}
-
+	constructor( private element: ElementRef, private router: Router, private questions_service: QuestionsService ){}
 	ngOnInit() { this.element.nativeElement.scrollIntoView(); }
 
+	is_it_in_the_array( array, element ){
+		for( var i=0; i < array.length; i++ ) {
+			if(element == array[i]){ return true; }
+		}
+		return false; 
+	}
+
 	save_answer( question_id, answer ){
-		this.questions[question_id].result = answer;
+		if( this.questions[question_id].id == 'Howoldareyou?' || this.questions[question_id].id == 'Areyouawareofanygeneticmutationsinyouorinyourfamily?'){
+			if( !this.questions[question_id].result ){
+				this.questions[question_id].result = [];
+			}
+			if( !this.is_it_in_the_array( this.questions[question_id].result, answer ) ){
+				this.questions[question_id].result.push( answer );
+			}else{
+				let index = this.questions[question_id].result.indexOf(answer);
+				if ( index > -1) {
+					this.questions[question_id].result.splice(index, 1);
+				}
+			}
+		}else{
+			this.questions[question_id].result = answer;
+		}
 	}
 
 	questionnaire_builder(){
@@ -46,7 +68,7 @@ export class QuestionnaireComponent implements OnInit {
 				if( this.questions[this.question_id].result == 'yes' ){
 					let duplicate_obj = JSON.parse(JSON.stringify(this.first_degree_loop));
 					for( var i=0; i<duplicate_obj.length; i++ ){
-						delete duplicate_obj[i].result;
+						duplicate_obj[i].result = '';
 						this.questions['question_'+(this.id+(i+1))] = duplicate_obj[i];
 					}
 				}else{
@@ -57,7 +79,7 @@ export class QuestionnaireComponent implements OnInit {
 				if( this.questions[this.question_id].result == 'yes' ){
 					let duplicate_obj = JSON.parse(JSON.stringify(this.first_degree_loop));
 					for( var i=0; i<duplicate_obj.length; i++ ){
-						delete duplicate_obj[i].result;
+						duplicate_obj[i].result = '';
 						this.questions['question_'+(this.id+(i+1))] = duplicate_obj[i];
 					}
 				}else{
@@ -65,11 +87,11 @@ export class QuestionnaireComponent implements OnInit {
 				}
 				break;
 			case 'Haveanyseconddegreerelativeshadcancer?':
-			case 'Haveanyseconddegreerelativeshadcancer?1':
+			case 'Haveanyseconddegreerelativeshadadifferentcancer?':
 				if( this.questions[this.question_id].result == 'yes' ){
 					let duplicate_obj = JSON.parse(JSON.stringify(this.second_degree_loop));
 					for( var i=0; i<duplicate_obj.length; i++ ){
-						delete duplicate_obj[i].result;
+						duplicate_obj[i].result = '';
 						this.questions['question_'+(this.id+(i+1))] = duplicate_obj[i];
 					}
 				}else{
@@ -77,8 +99,6 @@ export class QuestionnaireComponent implements OnInit {
 				}
 				break;
 			case 'Areyouawareofanygeneticmutationsinyouorinyourfamily?':
-				localStorage.setItem('questions', this.questions);
-				this.router.navigate(['/results']);
 				break;
 		}
 	}
@@ -86,13 +106,15 @@ export class QuestionnaireComponent implements OnInit {
 	next(){
 		this.questionnaire_builder();
 
-		var size = this.get_obj_size(this.questions);
+		var size = this.get_obj_size( this.questions );
 		if( this.id < (size - 1) && this.questions['question_'+this.id].result){
 			this.id = this.id + 1;
 			this.question_history.push(this.id);
 			this.question_id = 'question_' + this.id;
 			window.scrollTo(0, 0);
 		}else{
+			this.questions_service.set_question( this.questions );
+			this.router.navigate(['/results']);
 		}
 	}
 
