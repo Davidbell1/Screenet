@@ -1,10 +1,6 @@
 import { ElementRef, Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import {QUESTIONS} from '../../../assets/json/questions';
 import {Router} from '@angular/router';
-=======
-import { QUESTIONS } from '../../../assets/json/questions';
->>>>>>> 56cfb27b7a32afae3959c56e529bb507018fd4d9
 
 @Component({
 	selector: 'app-questionnaire',
