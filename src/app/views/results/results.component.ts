@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { GENERAL, GENERAL_MEN, GENERAL_WOMEN, FOBT, COLOSCOPY5, COLOSCOPY1, EXAM24, EXAM6, MAMOGRAPH1, MAMOGRAPH2, ONCOLOGIST, PAP2, SEEK_EXPERT } from '../../../assets/json/answers';
 
-
 import { QuestionsService } from '../../services/questions/questions.service';
 
 @Component({
@@ -16,13 +15,38 @@ export class ResultsComponent implements OnInit {
 	lat: number = -33.852029;
 	lng: number = 151.210920;
 	questions: any;
-	answer_array: any;
+	answer_array: any = [];
 	answer_text: any = GENERAL;
 
 	constructor( private element: ElementRef, private questions_service: QuestionsService, private router: Router ){}
 	ngOnInit(){
 		this.element.nativeElement.scrollIntoView();
 		this.get_question();
+		// this.init_map();
+	}
+
+	init_map(){
+		// let sydney = new google.maps.LatLng(this.lat, this.lng),
+		// 	request = {
+		// 		location: sydney,
+		// 		radius: 500,
+		// 		types: ['store']
+		// 	},
+		// 	map = new google.maps.Map(document.getElementById('map'), {
+		// 		center: sydney,
+		// 		zoom: 15,
+		// 		scrollwheel: false
+  // 			}),
+  // 			service = new google.maps.places.PlacesService(map);
+
+		// service.nearbySearch( request, function(results, status) {
+		// 	if (status == google.maps.places.PlacesServiceStatus.OK) {
+		// 		for (var i = 0; i < results.length; i++) {
+		// 			let place = results[i];
+		// 			console.log( place );
+		// 		}
+		// 	}
+		// })
 	}
 
 	get_question(){
@@ -183,10 +207,9 @@ export class ResultsComponent implements OnInit {
 		// If women
 		if( what_sex == 'female'){
 			// If > 70
-			if( how_old == '70 - 75' || how_old == '> 75' ){
+			if( how_old != '70 - 75' || how_old != '> 75' ){
 				console.log('PAP test');
 				this.answer_array.push('PAP2');
-
 			}	
 			// If a previous in cervical
 			if( type_of_cancer == 'cervical' ){
@@ -278,5 +301,50 @@ export class ResultsComponent implements OnInit {
 
 	compile_answers(){
 		console.log( this.answer_array );
+		let sorted_answer = this.answer_array.slice().sort();
+		let results = [];
+		for (var i = 0; i < sorted_answer.length - 1; i++) {
+			switch( sorted_answer[i] ){
+				case 'GENERAL_MEN':
+					this.answer_text = this.answer_text + GENERAL_MEN;
+					break;
+				case 'GENERAL_WOMEN':
+					this.answer_text = this.answer_text + GENERAL_WOMEN;
+					break;
+				case 'FOBT':
+					this.answer_text = this.answer_text + FOBT;
+					break;
+				case 'COLOSCOPY5':
+					this.answer_text = this.answer_text + COLOSCOPY5;
+					break;
+				case 'COLOSCOPY1':
+					this.answer_text = this.answer_text + COLOSCOPY1;
+					break;
+				case 'EXAM24':
+					this.answer_text = this.answer_text + EXAM24;
+					break;
+				case 'EXAM6':
+					this.answer_text = this.answer_text + EXAM6;
+					break;
+				case 'MAMOGRAPH1':
+					this.answer_text = this.answer_text + MAMOGRAPH1;
+					break;
+				case 'MAMOGRAPH2':
+					this.answer_text = this.answer_text + MAMOGRAPH2;
+					break;
+				case 'ONCOLOGIST':
+					this.answer_text = this.answer_text + ONCOLOGIST;
+					break;
+				case 'PAP2':
+					this.answer_text = this.answer_text + PAP2;
+					break;
+				case 'SEEK_EXPERT':
+					this.answer_text = this.answer_text + SEEK_EXPERT;
+					break;
+				default:
+					break;
+			}
+		}
+		console.log( this.answer_text );
 	}
 }

@@ -3,7 +3,7 @@ export const INTRODUCTION_QUESTIONS ={
 	'question_0': {
 		id: 'Howoldareyou?',
 		title: 'How old are you?',
-		subtitle: 'Your age help us determine the number of time you should check any sign of cancer.',
+		subtitle: '',
 		answers: [
 			{
 				label: 'younger than 40',
@@ -38,8 +38,8 @@ export const INTRODUCTION_QUESTIONS ={
 	},
 	'question_1': {
 		id: 'Whatsexareyou?',
-		title: 'What sex are you?',
-		subtitle: 'You sex determine the type of cancer you should be aware of.',
+		title: 'What is your biological sex?',
+		subtitle: '',
 		answers: [
 			{
 				label: 'Male',
@@ -58,13 +58,9 @@ export const INTRODUCTION_QUESTIONS ={
 export const WOMEN_TYPE_OF_CANCER =[
 	{
 		id: 'Haveyoueverhadanyofthefollowingbefore?1',
-		title: 'Have you ever had any of the following cancer before?',
-		subtitle: 'First degree relatives include parents and siblings.',
+		title: 'Have you ever had any of the following cancers before?',
+		subtitle: '',
 		answers: [
-			{
-				label: 'Colorectal',
-				value: 'colorectal'
-			},
 			{
 				label: 'Lung',
 				value: 'lung'
@@ -163,6 +159,10 @@ export const INTRODUCTION_FIST_DEGREE_LOOP =[
 			},
 			{
 				label: 'No',
+				value: 'no'
+			},
+			{
+				label: 'Unsure',
 				value: 'no'
 			}
 		],
@@ -292,6 +292,10 @@ export const FIST_DEGREE_LOOP =[
 			{
 				label: 'No',
 				value: 'no'
+			},
+			{
+				label: 'Unsure',
+				value: 'no'
 			}
 		],
 		result: ''
@@ -311,6 +315,10 @@ export const INTRODUCTION_SECOND_DEGREE_LOOP =[
 			},
 			{
 				label: 'No',
+				value: 'no'
+			},
+			{
+				label: 'Unsure',
 				value: 'no'
 			}
 		],
@@ -439,6 +447,10 @@ export const SECOND_DEGREE_LOOP =[
 			},
 			{
 				label: 'No',
+				value: 'no'
+			},
+			{
+				label: 'Unsure',
 				value: 'no'
 			}
 		],

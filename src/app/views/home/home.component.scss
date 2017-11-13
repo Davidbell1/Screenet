@@ -5,7 +5,7 @@ section.introduction{
 	div.header_picture{
 		width: 100%;
 		height: 400px;
-		background-image: url('../../../assets/Images/BG_Intro.jpg');
+		background-image: url('../../../assets/images/BG_Intro.jpg');
 		background-size: cover;
 		background-position: center center;
 	}
@@ -28,18 +28,25 @@ section.introduction_text{
 		h1{
 			font-family:'JosefinSlab';
 			font-weight: 800;
-			width: 90%;
+			width: 80%;
 			margin: 0 auto 20px auto;
 			font-size: 30px;
 			color: #4f4f4f;
+			text-align: left;
 		}
 		p{
 			font-family:'JosefinSans';
 			font-weight: 400;
-			width: 90%;
+			width: 80%;
 			margin: 0 auto;
 			font-size: 20px;
+			margin: 15px auto; 
 			color: #8e8e8e;
+			text-align: left;
+
+			small{
+				font-size: 12px;
+			}
 		}
 	}
 }
