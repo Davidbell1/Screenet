@@ -8,8 +8,8 @@
 		<h1>{{questions[question_id].title}}</h1>
 		<p>{{questions[question_id].subtitle}}</p>
 		<ul>
-			<li *ngFor="let answer of questions[question_id].answers" (click)="save_answer( question_id, answer.value )">
-				<a [ngClass]="{'active': (questions[question_id].result.indexOf(answer.value) > -1 ) }">{{answer.label}}</a>
+			<li *ngFor="let answer of questions[question_id].answers" (click)="save_answer( questions[question_id].id, answer.value )">
+				<a [ngClass]="{'active': (results[questions[question_id].id] == answer.value) }">{{answer.label}}</a>
 			</li>
 		</ul>
 		<div class="button_container">
