@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { QuestionsService } from '../../services/questions/questions.service';
 
-
 @Component({
 	selector: 'app-questionnaire',
 	templateUrl: './questionnaire.component.html',
@@ -35,7 +34,7 @@ export class QuestionnaireComponent implements OnInit {
 	}
 
 	save_answer( question_id, answer ){
-		if( this.questions[question_id].id == 'Howoldareyou?' || this.questions[question_id].id == 'Areyouawareofanygeneticmutationsinyouorinyourfamily?'){
+		if( this.questions[question_id].id == 'Areyouawareofanygeneticmutationsinyouorinyourfamily?'){
 			if( !this.questions[question_id].result ){
 				this.questions[question_id].result = [];
 			}
@@ -55,7 +54,6 @@ export class QuestionnaireComponent implements OnInit {
 	questionnaire_builder(){
 		switch( this.questions[this.question_id].id ){
 			case 'Whatsexareyou?':
-				console.log(this.questions[this.question_id].result);
 				if( this.questions[this.question_id].result == 'male1' ){
 					this.questions['question_'+(this.id+1)] = this.man_type_of_cancer[0];
 				}else{
@@ -106,17 +104,19 @@ export class QuestionnaireComponent implements OnInit {
 	}
 
 	next(){
-		this.questionnaire_builder();
+		if( this.questions['question_'+this.id].result ){
+			this.questionnaire_builder();
 
-		var size = this.get_obj_size( this.questions );
-		if( this.id < (size - 1) && this.questions['question_'+this.id].result){
-			this.id = this.id + 1;
-			this.question_history.push(this.id);
-			this.question_id = 'question_' + this.id;
-			window.scrollTo(0, 0);
-		}else{
-			this.questions_service.set_question( this.questions );
-			this.router.navigate(['/results']);
+			var size = this.get_obj_size( this.questions );
+			if( this.id < (size - 1) && this.questions['question_'+this.id].result){
+				this.id = this.id + 1;
+				this.question_history.push(this.id);
+				this.question_id = 'question_' + this.id;
+				window.scrollTo(0, 0);
+			}else{
+				this.questions_service.set_question( this.questions );
+				this.router.navigate(['/results']);
+			}
 		}
 	}
 
@@ -124,8 +124,8 @@ export class QuestionnaireComponent implements OnInit {
 		window.scrollTo(0, 0);
 		if( this.question_history[this.question_history.length - 1] ){
 			this.id = this.question_history[this.question_history.length - 1];
-    		this.question_history.splice((this.question_history.length -1), 1);
-    		this.questions['question_' + this.id].result = '';
+			this.question_history.splice((this.question_history.length -1), 1);
+			this.questions['question_' + this.id].result = '';
 		}
 		this.id = this.question_history[(this.question_history.length-1)];
 		this.question_id = 'question_' + this.id;

@@ -1,7 +1,7 @@
 import { ElementRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { GENERAL, GENERAL_MEN, GENERAL_WOMEN, FOBT, COLOSCOPY5, COLOSCOPY1, EXAM24, EXAM6, MAMOGRAPH1, MAMOGRAPH2, ONCOLOGIST, PAP2, SEEK_EXPERT } from '../../../assets/json/answers';
+import { GENERAL, GENERAL_MEN, GENERAL_MEN_END, GENERAL_WOMEN, GENERAL_WOMEN_END, FOBT, COLOSCOPY5, COLOSCOPY1, EXAM24, EXAM6, MAMOGRAPH1, MAMOGRAPH2, ONCOLOGIST, PAP2, SEEK_EXPERT } from '../../../assets/json/answers';
 
 import { QuestionsService } from '../../services/questions/questions.service';
 
@@ -124,7 +124,6 @@ export class ResultsComponent implements OnInit {
 						}
 						break;
 					default:
-						// console.log( questions[key_lvl1] );
 						break;
 				}
 			}
@@ -142,8 +141,10 @@ export class ResultsComponent implements OnInit {
 	analyze_general( what_sex ){
 		if( what_sex == 'female'){
 			this.answer_array.push('GENERAL_WOMEN');
+			this.answer_array.push('GENERAL_WOMEN_END');
 		}else{
 			this.answer_array.push('GENERAL_MEN');
+			this.answer_array.push('GENERAL_MEN_END');
 		}
 	}
 
@@ -156,7 +157,6 @@ export class ResultsComponent implements OnInit {
 
 		//If brca gene 
 		if( genetic_mutation.indexOf( 'brca' ) > -1 ){
-			console.log('Oncologist');
 			this.answer_array.push('ONCOLOGIST');
 		}
 
@@ -198,7 +198,6 @@ export class ResultsComponent implements OnInit {
 
 		//If 1st relative or 2nd relative with breast <45 and 1st relative or 2nd relative with sarcoma <45
 		if( (is_first_degree_with_breast_before_45 || is_second_degree_with_breast_before_45) && (is_first_degree_with_sarcoma_before_45 || is_second_degree_with_sarcoma_before_45) ){
-			console.log('Oncologist');
 			this.answer_array.push('ONCOLOGIST');
 		}
 	}
@@ -208,12 +207,10 @@ export class ResultsComponent implements OnInit {
 		if( what_sex == 'female'){
 			// If > 70
 			if( how_old != '70 - 75' || how_old != '> 75' ){
-				console.log('PAP test');
 				this.answer_array.push('PAP2');
 			}	
 			// If a previous in cervical
 			if( type_of_cancer == 'cervical' ){
-				console.log('Seek specialist');
 				this.answer_array.push('SEEK_EXPERT');
 			}
 		}
@@ -226,7 +223,6 @@ export class ResultsComponent implements OnInit {
 		
 		//If >50 or <75
 		if( how_old == '50 - 55' || how_old == '55 - 70' || how_old == '70 - 75' ){
-			console.log( 'FOBT' );
 			this.answer_array.push('FOBT');
 		}
 
@@ -248,24 +244,20 @@ export class ResultsComponent implements OnInit {
 
 		//If 1st relative with colorectal <55 or >1 1st degree 
 		if( is_first_degree_with_colorectal_before_55 == true || is_more_than_one_first_degree_with_colorectal == true ){
-			console.log( 'Coloscopy5' );
 			this.answer_array.push('COLOSCOPY5');
 		}
 
 		//If >1 1st relative with colorectal <50
 		if( is_more_than_one_first_degree_with_colorectal == true && is_first_degree_with_colorectal_before_50 == true ){
-			console.log( 'Coloscopy1' );
 			this.answer_array.push('COLOSCOPY1');
 		} 
 
 		// If lynchsyndrome or fap
 		if( genetic_mutation.indexOf( 'lynch syndrome' ) > -1 || genetic_mutation.indexOf( 'fap' ) > -1 ){
-			console.log( 'Coloscopy1' );
 			this.answer_array.push('COLOSCOPY1');
 		}
 
 		if( type_of_cancer == 'colorectal'){
-			console.log( 'Coloscopy1' );
 			this.answer_array.push('COLOSCOPY1');
 		}
 	}
@@ -282,69 +274,100 @@ export class ResultsComponent implements OnInit {
 			}
 		}
 		if( is_first_degree_with_melanoma === true ){
-			console.log( 'Exam24' );
 			this.answer_array.push('EXAM24');
 		}
 
 		//If Non melanome and fair skin
 		if( genetic_mutation.indexOf( 'fair skin' ) > -1 && type_of_cancer == 'non melanomatous'){
-			console.log( 'Exam24' );
 			this.answer_array.push('EXAM24');
 		}
 
 		//If melanoma1 or 
 		if(  type_of_cancer == 'melanoma1' ){
-			console.log( 'Exam6' );
 			this.answer_array.push('EXAM6');
 		}
 	}
 
-	compile_answers(){
-		console.log( this.answer_array );
-		let sorted_answer = this.answer_array.slice().sort();
-		let results = [];
-		for (var i = 0; i < sorted_answer.length - 1; i++) {
-			switch( sorted_answer[i] ){
-				case 'GENERAL_MEN':
-					this.answer_text = this.answer_text + GENERAL_MEN;
-					break;
-				case 'GENERAL_WOMEN':
-					this.answer_text = this.answer_text + GENERAL_WOMEN;
-					break;
-				case 'FOBT':
-					this.answer_text = this.answer_text + FOBT;
-					break;
-				case 'COLOSCOPY5':
-					this.answer_text = this.answer_text + COLOSCOPY5;
-					break;
-				case 'COLOSCOPY1':
-					this.answer_text = this.answer_text + COLOSCOPY1;
-					break;
-				case 'EXAM24':
-					this.answer_text = this.answer_text + EXAM24;
-					break;
-				case 'EXAM6':
-					this.answer_text = this.answer_text + EXAM6;
-					break;
-				case 'MAMOGRAPH1':
-					this.answer_text = this.answer_text + MAMOGRAPH1;
-					break;
-				case 'MAMOGRAPH2':
-					this.answer_text = this.answer_text + MAMOGRAPH2;
-					break;
-				case 'ONCOLOGIST':
-					this.answer_text = this.answer_text + ONCOLOGIST;
-					break;
-				case 'PAP2':
-					this.answer_text = this.answer_text + PAP2;
-					break;
-				case 'SEEK_EXPERT':
-					this.answer_text = this.answer_text + SEEK_EXPERT;
-					break;
-				default:
-					break;
+
+	sort_the_answers(): Promise<any>{
+		return new Promise(resolve => {
+			if( this.answer_array.indexOf( 'GENERAL_MEN' ) != -1 ){
+				this.answer_array.splice( this.answer_array.indexOf( 'GENERAL_MEN' ), 1);
+				this.answer_array.splice( this.answer_array.indexOf( 'GENERAL_MEN_END' ), 1);
+				if( this.answer_array.length == 0 ){
+					this.answer_array.push('NONE');
+				}
+				this.answer_array.splice( 0, 0, 'GENERAL_MEN' );
+				this.answer_array.splice( this.answer_array.length, 0, 'GENERAL_MEN_END' );
+			}else{
+				this.answer_array.splice( this.answer_array.indexOf( 'GENERAL_WOMEN' ), 1 );
+				this.answer_array.splice( this.answer_array.indexOf( 'GENERAL_WOMEN_END' ), 1 );
+				if( this.answer_array.length == 0 ){
+					this.answer_array.push('NONE');
+				}
+				this.answer_array.splice( 0, 0, 'GENERAL_WOMEN' );
+				this.answer_array.splice( this.answer_array.length, 0, 'GENERAL_WOMEN_END' );
 			}
-		}
-		console.log( this.answer_text );
+
+			resolve( this.answer_array );
+		});
+	}
+
+
+	compile_answers(){
+		this.sort_the_answers().then(sorted_answer => {
+       		let results = [];
+			for (var i = 0; i < sorted_answer.length; i++) {
+				switch( sorted_answer[i] ){
+					case 'GENERAL_MEN':
+						this.answer_text = this.answer_text + GENERAL_MEN;
+						break;
+					case 'GENERAL_MEN_END':
+						this.answer_text = this.answer_text + GENERAL_MEN_END;
+						break;
+					case 'GENERAL_WOMEN':
+						this.answer_text = this.answer_text + GENERAL_WOMEN;
+						break;
+					case 'GENERAL_WOMEN_END':
+						this.answer_text = this.answer_text + GENERAL_WOMEN_END;
+						break;
+					case 'FOBT':
+						this.answer_text = this.answer_text + FOBT;
+						break;
+					case 'COLOSCOPY5':
+						this.answer_text = this.answer_text + COLOSCOPY5;
+						break;
+					case 'COLOSCOPY1':
+						this.answer_text = this.answer_text + COLOSCOPY1;
+						break;
+					case 'EXAM24':
+						this.answer_text = this.answer_text + EXAM24;
+						break;
+					case 'EXAM6':
+						this.answer_text = this.answer_text + EXAM6;
+						break;
+					case 'MAMOGRAPH1':
+						this.answer_text = this.answer_text + MAMOGRAPH1;
+						break;
+					case 'MAMOGRAPH2':
+						this.answer_text = this.answer_text + MAMOGRAPH2;
+						break;
+					case 'ONCOLOGIST':
+						this.answer_text = this.answer_text + ONCOLOGIST;
+						break;
+					case 'PAP2':
+						this.answer_text = this.answer_text + PAP2;
+						break;
+					case 'SEEK_EXPERT':
+						this.answer_text = this.answer_text + SEEK_EXPERT;
+						break;
+					case 'NONE':
+						this.answer_text = this.answer_text + '<li>You do not need to do any additional screening tests.</li>';
+						break;
+					default:
+						break;
+				}
+			}
+    	});
 	}
 }

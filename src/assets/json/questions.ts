@@ -71,11 +71,13 @@ export const WOMEN_TYPE_OF_CANCER =[
 			},
 			{
 				label: 'Melanoma (or >5 dysplastic naevi)',
-				value: 'melanoma1'
+				value: 'melanoma1',
+				additionnal_help: 'A mole that is usually larger and more irregular than normal, diagnosed on biopsy.'
 			},
 			{
 				label: 'Non Melanomatous skin cancer',
-				value: 'non melanomatous'
+				value: 'non melanomatous',
+				additionnal_help: 'This include basal cell carcinoma and squamous cell carcinoma.'
 			},
 			{
 				label: 'Ovarian',
@@ -123,11 +125,14 @@ export const MAN_TYPE_OF_CANCER =[
 			},
 			{
 				label: 'Melanoma (or >5 dysplastic naevi)',
-				value: 'melanoma'
+				value: 'melanoma1',
+				additionnal_help: 'A mole that is usually larger and more irregular than normal, diagnosed on biopsy.'
+
 			},
 			{
 				label: 'Non Melanomatous skin cancer',
-				value: 'non melanomatous'
+				value: 'non melanomatous',
+				additionnal_help: 'This include basal cell carcinoma and squamous cell carcinoma.'
 			},
 			{
 				label: 'Sarcoma',
@@ -163,7 +168,7 @@ export const INTRODUCTION_FIST_DEGREE_LOOP =[
 			},
 			{
 				label: 'Unsure',
-				value: 'no'
+				value: 'unsure'
 			}
 		],
 		result: ''
@@ -295,7 +300,7 @@ export const FIST_DEGREE_LOOP =[
 			},
 			{
 				label: 'Unsure',
-				value: 'no'
+				value: 'unsure'
 			}
 		],
 		result: ''
@@ -319,7 +324,7 @@ export const INTRODUCTION_SECOND_DEGREE_LOOP =[
 			},
 			{
 				label: 'Unsure',
-				value: 'no'
+				value: 'unsure'
 			}
 		],
 		result: ''
@@ -451,7 +456,7 @@ export const SECOND_DEGREE_LOOP =[
 			},
 			{
 				label: 'Unsure',
-				value: 'no'
+				value: 'unsure'
 			}
 		],
 		result: ''
@@ -467,19 +472,25 @@ export const CLOSURE_QUESTION =[
 		answers: [
 			{
 				label: 'A personal or family history of Lynch Syndrome',
-				value: 'lynch syndrome'
+				value: 'lynch syndrome',
+				additionnal_help: 'Otherwise known as HNPCC (hereditary nonpolyposis colorectal cancer), Lynch Syndrome is a genetic condition that leads to a high risk of developing colorectal cancer as well as other cancers including endometrial, ovarian, gastric, hepatobiliary, small bowel, urinary tract, brain and skin cancer. '
+
 			},
 			{
 				label: 'A personal or family history of BRCA',
-				value: 'brca'
+				value: 'brca',
+				additionnal_help: 'Mutations in either BRCA1 or BRCA2 genes result in significantly higher risk of developing breast and ovarian cancer.'
 			},
 			{
 				label: 'A personal or family history of FAP',
-				value: 'fap'
+				value: 'fap',
+				additionnal_help: 'Familial adenomatous polyposis is a genetic condition which leads to the formation of multiple polyps in the colon. Though benign, these polyps can become malignant.'
 			},
 			{
 				label: 'Ashkenazi Heritage',
-				value: 'ashkenazi heritage'
+				value: 'ashkenazi heritage',
+				additionnal_help: 'Jewish people with Eastern European ancestry.'
+
 			},
 			{
 				label: 'Immunosuppression',

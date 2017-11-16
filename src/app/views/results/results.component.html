@@ -3,13 +3,18 @@
 	<img src="../../../assets/images/LOGO_Screenet.jpg" alt="logo screenet">
 </section>
 
-<section class="introduction_text">
-	<div class="inner_container" [innerHTML]="answer_text"></div>
+<section class="introduction_text" >
+	<div class="inner_container">
+		<div class="title_container">
+			<h1>Screening recommendations.</h1>
+		</div>
+		<div class="body_container" [innerHTML]="answer_text"></div>
+	</div>
 </section>
 
 <section class="map_container">
 	<div class="title_container">
-		<h1>Screening recommendations.</h1>
+		<h1>Found a General Practitioner around.</h1>
 	</div>
 	<agm-map class="map" [latitude]="lat" [longitude]="lng" [disableDoubleClickZoom]="true" [zoomControl]="false" [scrollwheel]="false" [zoom]="14" [mapDraggable]="false">
 		<agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
