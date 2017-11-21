@@ -1,9 +1,10 @@
-import { ElementRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { GENERAL, GENERAL_MEN, GENERAL_MEN_END, GENERAL_WOMEN, GENERAL_WOMEN_END, FOBT, COLOSCOPY5, COLOSCOPY1, EXAM24, EXAM6, MAMOGRAPH1, MAMOGRAPH2, ONCOLOGIST, PAP2, SEEK_EXPERT } from '../../../assets/json/answers';
 
 import { QuestionsService } from '../../services/questions/questions.service';
+import { GoogleapiService } from '../../services/apiservices/googleapi.service';
 
 @Component({
 	selector: 'app-results',
@@ -14,39 +15,61 @@ import { QuestionsService } from '../../services/questions/questions.service';
 export class ResultsComponent implements OnInit {
 	lat: number = -33.852029;
 	lng: number = 151.210920;
+	icon_link: string = '../../assets/images/ICON_doctor.png';
+	place_name: string = '';
+	place_address: string = '';
 	questions: any;
 	answer_array: any = [];
 	answer_text: any = GENERAL;
+	nearby_places: any = [];
 
-	constructor( private element: ElementRef, private questions_service: QuestionsService, private router: Router ){}
+	constructor( private element: ElementRef, private questions_service: QuestionsService, private googleapiservice: GoogleapiService, private router: Router ){}
 	ngOnInit(){
 		this.element.nativeElement.scrollIntoView();
-		this.get_question();
-		// this.init_map();
+		this.get_question();	
 	}
 
-	init_map(){
-		// let sydney = new google.maps.LatLng(this.lat, this.lng),
-		// 	request = {
-		// 		location: sydney,
-		// 		radius: 500,
-		// 		types: ['store']
-		// 	},
-		// 	map = new google.maps.Map(document.getElementById('map'), {
-		// 		center: sydney,
-		// 		zoom: 15,
-		// 		scrollwheel: false
-  // 			}),
-  // 			service = new google.maps.places.PlacesService(map);
+	ngAfterViewInit() {
+		this.getLocation();
+	}
+	
+	getLocation(){
+        if (navigator.geolocation) {
+        	var self = this;
+            navigator.geolocation.getCurrentPosition(function(response){
+                self.init_map(response);
+            }, function() {
+            	alert("Unable to get GPS Location");
+            }, {
+            	enableHighAccuracy : true
+            });
+        }
+        else {
+        	alert("Geolocation is not supported by this browser.");
+        }
+    }
 
-		// service.nearbySearch( request, function(results, status) {
-		// 	if (status == google.maps.places.PlacesServiceStatus.OK) {
-		// 		for (var i = 0; i < results.length; i++) {
-		// 			let place = results[i];
-		// 			console.log( place );
-		// 		}
-		// 	}
-		// })
+	display_information(name, address){
+		this.place_name = name;
+		this.place_address = address;
+	}
+	hide_information(){
+		this.place_name = '';
+		this.place_address = '';
+	}
+
+	init_map(position: any){
+		this.lat = position.coords.latitude;
+		this.lng = position.coords.longitude;
+		this.get_nerby_gp();
+	}
+
+	get_nerby_gp(){
+		console.log("alex");
+		this.googleapiservice.placeapi( this.lat, this.lng, 1500, 'doctor' )
+			.then( data => {
+				this.nearby_places = data.results
+			});
 	}
 
 	get_question(){

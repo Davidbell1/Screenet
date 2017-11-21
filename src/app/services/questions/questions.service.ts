@@ -4,7 +4,6 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class QuestionsService {
-  // public question: any;
   public question: any;
 
   constructor(){}

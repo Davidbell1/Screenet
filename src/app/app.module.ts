@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { QuestionsService } from './services/questions/questions.service';
+import { GoogleapiService } from './services/apiservices/googleapi.service';
+
 
 import { AgmCoreModule } from '@agm/core';
 
@@ -27,13 +30,15 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(routes),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyB93fKBqB2tVEJh3PBA3LV0n4Jl8bJIL3w '
-    })
+      apiKey: 'AIzaSyB93fKBqB2tVEJh3PBA3LV0n4Jl8bJIL3w'
+    }),
   ],
   providers: [
     QuestionsService,
+    GoogleapiService,
   ],
   bootstrap: [AppComponent]
 })

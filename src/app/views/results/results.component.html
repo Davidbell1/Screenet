@@ -16,8 +16,14 @@
 	<div class="title_container">
 		<h1>Found a General Practitioner around.</h1>
 	</div>
+	<span class="information" *ngIf="place_name != ''">
+		<h3>{{place_name}}</h3>
+		<h4>{{place_address}}</h4>
+	</span>
 	<agm-map class="map" [latitude]="lat" [longitude]="lng" [disableDoubleClickZoom]="true" [zoomControl]="false" [scrollwheel]="false" [zoom]="14" [mapDraggable]="false">
-		<agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+
+		<agm-marker *ngFor="let data of nearby_places" [latitude]="data.geometry.location.lat" [longitude]="data.geometry.location.lng" [iconUrl]="icon_link" (mouseOver)="display_information(data.name, data.vicinity)" (mouseOut)="hide_information()">
+		</agm-marker>
 	</agm-map>
 </section>
 
