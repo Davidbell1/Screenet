@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 
 export class GoogleapiService {
-	private api = 'http://localhost/screenet/Version1/server/index.php';
+	private api = 'https://screenet.com.au/server/index.php';
 	private headers = new Headers({'Content-Type': 'application/json'});
 
 	constructor( private http: HttpClient ){}

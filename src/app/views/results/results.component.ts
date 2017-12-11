@@ -19,8 +19,8 @@ export class ResultsComponent implements OnInit {
 	place_name: string = '';
 	place_address: string = '';
 	questions: any;
-	answer_array: any = [];
-	answer_text: any = GENERAL;
+	unfiltered_answers: any = [];
+	answer_text: any = GENERAL.text;
 	nearby_places: any = [];
 
 	constructor( private element: ElementRef, private questions_service: QuestionsService, private googleapiservice: GoogleapiService, private router: Router ){}
@@ -65,7 +65,6 @@ export class ResultsComponent implements OnInit {
 	}
 
 	get_nerby_gp(){
-		console.log("alex");
 		this.googleapiservice.placeapi( this.lat, this.lng, 1500, 'doctor' )
 			.then( data => {
 				this.nearby_places = data.results
@@ -75,7 +74,6 @@ export class ResultsComponent implements OnInit {
 	get_question(){
 		this.questions = this.questions_service.get_question();
 		if( this.questions != undefined ){
-			this.questions = this.questions;
 			this.analyze_questionnaire( this.questions );
 		}else{
 			this.router.navigate(['/home']);
@@ -87,7 +85,7 @@ export class ResultsComponent implements OnInit {
 			what_sex,
 			type_of_cancer,
 			first_degree_loop = [],
-			second_degree_loop =[],
+			second_degree_loop = [],
 			genetic_mutation;
 
 		for (var key_lvl1 in questions) {
@@ -158,16 +156,16 @@ export class ResultsComponent implements OnInit {
 		this.analyze_colorectal( how_old, type_of_cancer, first_degree_loop, genetic_mutation );
 		this.analyze_skin( type_of_cancer, genetic_mutation, first_degree_loop );
 
-		this.compile_answers();
+		this.filter_answers();
 	}
 
 	analyze_general( what_sex ){
 		if( what_sex == 'female'){
-			this.answer_array.push('GENERAL_WOMEN');
-			this.answer_array.push('GENERAL_WOMEN_END');
+			this.unfiltered_answers.push( GENERAL_WOMEN );
+			this.unfiltered_answers.push( GENERAL_WOMEN_END );
 		}else{
-			this.answer_array.push('GENERAL_MEN');
-			this.answer_array.push('GENERAL_MEN_END');
+			this.unfiltered_answers.push( GENERAL_MEN );
+			this.unfiltered_answers.push( GENERAL_MEN_END );
 		}
 	}
 
@@ -180,7 +178,7 @@ export class ResultsComponent implements OnInit {
 
 		//If brca gene 
 		if( genetic_mutation.indexOf( 'brca' ) > -1 ){
-			this.answer_array.push('ONCOLOGIST');
+			this.unfiltered_answers.push( ONCOLOGIST );
 		}
 
 		if( first_degree_loop || second_degree_loop ){
@@ -216,12 +214,11 @@ export class ResultsComponent implements OnInit {
 					}
 				}
 			}
-
 		}
 
 		//If 1st relative or 2nd relative with breast <45 and 1st relative or 2nd relative with sarcoma <45
 		if( (is_first_degree_with_breast_before_45 || is_second_degree_with_breast_before_45) && (is_first_degree_with_sarcoma_before_45 || is_second_degree_with_sarcoma_before_45) ){
-			this.answer_array.push('ONCOLOGIST');
+			this.unfiltered_answers.push( ONCOLOGIST );
 		}
 	}
 
@@ -230,11 +227,11 @@ export class ResultsComponent implements OnInit {
 		if( what_sex == 'female'){
 			// If > 70
 			if( how_old != '70 - 75' || how_old != '> 75' ){
-				this.answer_array.push('PAP2');
+				this.unfiltered_answers.push( PAP2 );
 			}	
 			// If a previous in cervical
 			if( type_of_cancer == 'cervical' ){
-				this.answer_array.push('SEEK_EXPERT');
+				this.unfiltered_answers.push( SEEK_EXPERT );
 			}
 		}
 	}
@@ -246,7 +243,7 @@ export class ResultsComponent implements OnInit {
 		
 		//If >50 or <75
 		if( how_old == '50 - 55' || how_old == '55 - 70' || how_old == '70 - 75' ){
-			this.answer_array.push('FOBT');
+			this.unfiltered_answers.push( FOBT );
 		}
 
 		if( first_degree_loop.length > 0 ){
@@ -267,21 +264,21 @@ export class ResultsComponent implements OnInit {
 
 		//If 1st relative with colorectal <55 or >1 1st degree 
 		if( is_first_degree_with_colorectal_before_55 == true || is_more_than_one_first_degree_with_colorectal == true ){
-			this.answer_array.push('COLOSCOPY5');
+			this.unfiltered_answers.push( COLOSCOPY5 );
 		}
 
 		//If >1 1st relative with colorectal <50
 		if( is_more_than_one_first_degree_with_colorectal == true && is_first_degree_with_colorectal_before_50 == true ){
-			this.answer_array.push('COLOSCOPY1');
+			this.unfiltered_answers.push( COLOSCOPY1 );
 		} 
 
 		// If lynchsyndrome or fap
 		if( genetic_mutation.indexOf( 'lynch syndrome' ) > -1 || genetic_mutation.indexOf( 'fap' ) > -1 ){
-			this.answer_array.push('COLOSCOPY1');
+			this.unfiltered_answers.push( COLOSCOPY1 );
 		}
 
 		if( type_of_cancer == 'colorectal'){
-			this.answer_array.push('COLOSCOPY1');
+			this.unfiltered_answers.push( COLOSCOPY1 );
 		}
 	}
 
@@ -297,92 +294,134 @@ export class ResultsComponent implements OnInit {
 			}
 		}
 		if( is_first_degree_with_melanoma === true ){
-			this.answer_array.push('EXAM24');
+			this.unfiltered_answers.push( EXAM24 );
 		}
 
 		//If Non melanome and fair skin
 		if( genetic_mutation.indexOf( 'fair skin' ) > -1 && type_of_cancer == 'non melanomatous'){
-			this.answer_array.push('EXAM24');
+			this.unfiltered_answers.push( EXAM24 );
 		}
 
 		//If melanoma1 or 
 		if(  type_of_cancer == 'melanoma1' ){
-			this.answer_array.push('EXAM6');
+			this.unfiltered_answers.push( EXAM6 );
 		}
 	}
 
-
-	sort_the_answers(): Promise<any>{
-		return new Promise(resolve => {
-			if( this.answer_array.indexOf( 'GENERAL_MEN' ) != -1 ){
-				this.answer_array.splice( this.answer_array.indexOf( 'GENERAL_MEN' ), 1);
-				this.answer_array.splice( this.answer_array.indexOf( 'GENERAL_MEN_END' ), 1);
-				if( this.answer_array.length == 0 ){
-					this.answer_array.push('NONE');
-				}
-				this.answer_array.splice( 0, 0, 'GENERAL_MEN' );
-				this.answer_array.splice( this.answer_array.length, 0, 'GENERAL_MEN_END' );
+	check_duplicate( array, value ){
+		if(value != 'general'){
+			let array_of_value = array.map(function(item){ return item.category });	
+			let is_duplicate = array_of_value.some(function(item, index){
+				return array_of_value.indexOf(item) != index;
+			});
+	
+			if( is_duplicate == false ){
+				return is_duplicate ;
 			}else{
-				this.answer_array.splice( this.answer_array.indexOf( 'GENERAL_WOMEN' ), 1 );
-				this.answer_array.splice( this.answer_array.indexOf( 'GENERAL_WOMEN_END' ), 1 );
-				if( this.answer_array.length == 0 ){
-					this.answer_array.push('NONE');
-				}
-				this.answer_array.splice( 0, 0, 'GENERAL_WOMEN' );
-				this.answer_array.splice( this.answer_array.length, 0, 'GENERAL_WOMEN_END' );
-			}
+				let is_value_equal = false;
 
-			resolve( this.answer_array );
+				for( let j = 0; j < array.length; j++ ){
+					if( array[j].category == value ){
+						is_value_equal = array[j].order;
+					}
+				}
+
+				return is_value_equal;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	filter_answers(){
+		// filter duplicate
+		let filtered_answers = [];
+		for( var i = 0; i < this.unfiltered_answers.length; i++ ){
+			let is_duplicate = this.check_duplicate( filtered_answers, this.unfiltered_answers[i].category );
+
+			if( typeof(is_duplicate) === "boolean" ){
+				filtered_answers.push( this.unfiltered_answers[i] );
+			}else{
+				if( is_duplicate > this.unfiltered_answers[i].order ){
+					filtered_answers.push( this.unfiltered_answers[i] );
+				}
+			}
+		}
+
+		this.compile_answers( filtered_answers );
+	}
+
+
+	sort_the_answers( filtered_array ): Promise<any>{
+		return new Promise(resolve => {
+			if( filtered_array.indexOf( 'GENERAL_MEN' ) != -1 ){
+				filtered_array.splice( filtered_array.indexOf( 'GENERAL_MEN' ), 1);
+				filtered_array.splice( filtered_array.indexOf( 'GENERAL_MEN_END' ), 1);
+				if( filtered_array.length == 0 ){
+					filtered_array.push('NONE');
+				}
+				filtered_array.splice( 0, 0, 'GENERAL_MEN' );
+				filtered_array.splice( filtered_array.length, 0, 'GENERAL_MEN_END' );
+			}else{
+				filtered_array.splice( filtered_array.indexOf( 'GENERAL_WOMEN' ), 1 );
+				filtered_array.splice( filtered_array.indexOf( 'GENERAL_WOMEN_END' ), 1 );
+				if( filtered_array.length == 0 ){
+					filtered_array.push('NONE');
+				}
+				filtered_array.splice( 0, 0, 'GENERAL_WOMEN' );
+				filtered_array.splice( filtered_array.length, 0, 'GENERAL_WOMEN_END' );
+			}
+			resolve( filtered_array );
 		});
 	}
 
 
-	compile_answers(){
-		this.sort_the_answers().then(sorted_answer => {
-       		let results = [];
+	compile_answers( filtered_array ){
+		this.sort_the_answers( filtered_array ).then(sorted_answer => {
+			let results = [];
 			for (var i = 0; i < sorted_answer.length; i++) {
 				switch( sorted_answer[i] ){
 					case 'GENERAL_MEN':
-						this.answer_text = this.answer_text + GENERAL_MEN;
+						this.answer_text = this.answer_text + GENERAL_MEN.text;
 						break;
 					case 'GENERAL_MEN_END':
-						this.answer_text = this.answer_text + GENERAL_MEN_END;
+						this.answer_text = this.answer_text + GENERAL_MEN_END.text;
 						break;
 					case 'GENERAL_WOMEN':
-						this.answer_text = this.answer_text + GENERAL_WOMEN;
+						this.answer_text = this.answer_text + GENERAL_WOMEN.text;
 						break;
 					case 'GENERAL_WOMEN_END':
-						this.answer_text = this.answer_text + GENERAL_WOMEN_END;
+						this.answer_text = this.answer_text + GENERAL_WOMEN_END.text;
 						break;
 					case 'FOBT':
-						this.answer_text = this.answer_text + FOBT;
+						this.answer_text = this.answer_text + FOBT.text;
 						break;
 					case 'COLOSCOPY5':
-						this.answer_text = this.answer_text + COLOSCOPY5;
+						this.answer_text = this.answer_text + COLOSCOPY5.text;
 						break;
 					case 'COLOSCOPY1':
-						this.answer_text = this.answer_text + COLOSCOPY1;
+						this.answer_text = this.answer_text + COLOSCOPY1.text;
 						break;
 					case 'EXAM24':
-						this.answer_text = this.answer_text + EXAM24;
+						this.answer_text = this.answer_text + EXAM24.text;
 						break;
 					case 'EXAM6':
-						this.answer_text = this.answer_text + EXAM6;
+						this.answer_text = this.answer_text + EXAM6.text;
 						break;
 					case 'MAMOGRAPH1':
-						this.answer_text = this.answer_text + MAMOGRAPH1;
+						this.answer_text = this.answer_text + MAMOGRAPH1.text;
 						break;
 					case 'MAMOGRAPH2':
-						this.answer_text = this.answer_text + MAMOGRAPH2;
+						this.answer_text = this.answer_text + MAMOGRAPH2.text;
 						break;
 					case 'ONCOLOGIST':
-						this.answer_text = this.answer_text + ONCOLOGIST;
+						this.answer_text = this.answer_text + ONCOLOGIST.text;
 						break;
 					case 'PAP2':
-						this.answer_text = this.answer_text + PAP2;
+						this.answer_text = this.answer_text + PAP2.text;
 						break;
 					case 'SEEK_EXPERT':
-						this.answer_text = this.answer_text + SEEK_EXPERT;
+						this.answer_text = this.answer_text + SEEK_EXPERT.text;
 						break;
 					case 'NONE':
 						this.answer_text = this.answer_text + '<li>You do not need to do any additional screening tests.</li>';
@@ -391,6 +430,6 @@ export class ResultsComponent implements OnInit {
 						break;
 				}
 			}
-    	});
+		});
 	}
 }
