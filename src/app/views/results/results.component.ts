@@ -151,80 +151,105 @@ export class ResultsComponent implements OnInit {
 		}
 
 		this.analyze_general( what_sex );
-		this.analyze_breast_cancer( first_degree_loop, second_degree_loop, genetic_mutation );
+		this.analyze_breast_cancer( what_sex, how_old, first_degree_loop, second_degree_loop, genetic_mutation );
 		this.analyze_cervical_cancer( what_sex, how_old, type_of_cancer );
 		this.analyze_colorectal( how_old, type_of_cancer, first_degree_loop, genetic_mutation );
 		this.analyze_skin( type_of_cancer, genetic_mutation, first_degree_loop );
 
-		this.filter_answers();
+		this.filter_answers( what_sex );
 	}
 
 	analyze_general( what_sex ){
 		if( what_sex == 'female'){
 			this.unfiltered_answers.push( GENERAL_WOMEN );
-			this.unfiltered_answers.push( GENERAL_WOMEN_END );
 		}else{
 			this.unfiltered_answers.push( GENERAL_MEN );
-			this.unfiltered_answers.push( GENERAL_MEN_END );
 		}
 	}
 
-	analyze_breast_cancer( first_degree_loop, second_degree_loop, genetic_mutation ){
-		let is_first_degree_with_breast_before_45: boolean = false;
-		let is_second_degree_with_breast_before_45: boolean = false;
-		let is_first_degree_with_sarcoma_before_45: boolean = false;
-		let is_second_degree_with_sarcoma_before_45: boolean = false;
+
+	convert_string_to_number( first_degree_element ){
+			switch( first_degree_element['Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?'] ){
+				case '0':
+					first_degree_element['Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?'] = 0;
+					break;
+				case '1':
+					first_degree_element['Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?'] = 1;
+					break;
+				case '2x':
+					first_degree_element['Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?'] = 2;
+					break;
+				case '> 2':
+					first_degree_element['Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?'] = 3;
+					break;
+				case 'unknown':
+					first_degree_element['Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?'] = 1;
+					break;
+				default:
+					break;
+			}
+
+			return first_degree_element;
+	}
+
+	analyze_breast_cancer( what_sex, how_old, first_degree_loop, second_degree_loop, genetic_mutation ){
+		if( what_sex == 'female' ){
+			let how_many_first_degree_with_breast_before_50: number = 0;
+			let how_many_first_degree_with_breast_after_50: number = 0;
+			let how_many_first_degree_with_sarcoma_before_50: number = 0;
+			let how_many_first_degree_with_ovarian_before_50: number = 0;
 
 
-		//If brca gene 
-		if( genetic_mutation.indexOf( 'brca' ) > -1 ){
-			this.unfiltered_answers.push( ONCOLOGIST );
-		}
 
-		if( first_degree_loop || second_degree_loop ){
-
-			if( first_degree_loop.length > 0 ){
-				for( var i = 0; i < first_degree_loop.length; i++){
-					//If 1st relative with breast < 45
-					if( first_degree_loop[i]['Whatsortofcancerwasit?'] == 'breast'){
-						if( first_degree_loop[i]['Howoldweretheywhendiagnosed?'] == '40 - 45' || first_degree_loop[i]['Howoldweretheywhendiagnosed?'] == '< 40' ){
-							is_first_degree_with_breast_before_45 = true;
-						}
-					}
-					//If 1st relative with sarcoma < 45
-					if( first_degree_loop[i]['Whatsortofcancerwasit?'] == 'sarcoma'){
-						if( first_degree_loop[i]['Howoldweretheywhendiagnosed?'] == '40 - 45' || first_degree_loop[i]['Howoldweretheywhendiagnosed?'] == '< 40' ){
-							is_first_degree_with_sarcoma_before_45 = true;
+			if( first_degree_loop || second_degree_loop ){
+				if( first_degree_loop.length > 0 ){
+					for( let i = 0; i < first_degree_loop.length; i++){
+						let converted_element = this.convert_string_to_number( first_degree_loop[i] );
+						if( converted_element['Howoldweretheywhendiagnosed?'] == '< 40' || converted_element['Howoldweretheywhendiagnosed?'] == '40 - 45' || converted_element['Howoldweretheywhendiagnosed?'] == '45 - 50' ){
+							if( converted_element['Whatsortofcancerwasit?'] == 'breast'){
+								how_many_first_degree_with_breast_before_50 = converted_element['Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?'];
+							}
+							if( converted_element['Whatsortofcancerwasit?'] == 'sarcoma'){
+								how_many_first_degree_with_sarcoma_before_50 = converted_element['Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?'];
+							}
+							if( converted_element['Whatsortofcancerwasit?'] == 'ovarian'){
+								how_many_first_degree_with_ovarian_before_50 = converted_element['Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?'];
+							}
+						}else{
+							if( converted_element['Whatsortofcancerwasit?'] == 'breast'){
+								how_many_first_degree_with_breast_after_50 = converted_element['Howmanyotherfirstdegreerelativesonthesamesideofyourfamilyhadthesamecancer?'];
+							}
 						}
 					}
 				}
-			}else if( second_degree_loop.length > 0 ){
-				for( var i = 0; i < second_degree_loop.length; i++){
-					//If 2nd relative with breast < 45
-					if( second_degree_loop[i]['Whatsortofcancerwasit?'] == 'breast'){
-						if( second_degree_loop[i]['Howoldweretheywhendiagnosed?'] == '40 - 45' || second_degree_loop[i]['Howoldweretheywhendiagnosed?'] == '< 40' ){
-							is_second_degree_with_breast_before_45 = true;
-						}
-					}
-					//If 2nd relative with sarcoma < 45
-					if( second_degree_loop[i]['Whatsortofcancerwasit?'] == 'sarcoma'){
-						if( second_degree_loop[i]['Howoldweretheywhendiagnosed?'] == '40 - 45' || second_degree_loop[i]['Howoldweretheywhendiagnosed?'] == '< 40' ){
-							is_second_degree_with_sarcoma_before_45 = true;
-						}
-					}
+				// if( second_degree_loop.length > 0 ){
+				// 	for( let j = 0; j < second_degree_loop.length; j++){}
+				// }
+			}
+
+
+			//No 2nd degree loop used ?
+			// MAM1 is basically every women between 50 and 74
+
+
+			//If brca gene 
+			if( genetic_mutation.indexOf( 'brca' ) > -1 ){
+				this.unfiltered_answers.push( ONCOLOGIST );
+			}else if( (how_many_first_degree_with_breast_before_50 + how_many_first_degree_with_sarcoma_before_50 + how_many_first_degree_with_ovarian_before_50 ) > 2 ){
+				this.unfiltered_answers.push( ONCOLOGIST );
+			}else if( how_old != '< 40' || how_old != '> 75' ){
+				if( how_many_first_degree_with_breast_before_50 > 0 || ( how_many_first_degree_with_breast_before_50 + how_many_first_degree_with_breast_after_50 ) > 1 ){
+					this.unfiltered_answers.push( MAMOGRAPH1 );
+				}else if( how_old != '40 - 45' || how_old != '45 - 50' ){
+					this.unfiltered_answers.push( MAMOGRAPH2 );
 				}
 			}
-		}
-
-		//If 1st relative or 2nd relative with breast <45 and 1st relative or 2nd relative with sarcoma <45
-		if( (is_first_degree_with_breast_before_45 || is_second_degree_with_breast_before_45) && (is_first_degree_with_sarcoma_before_45 || is_second_degree_with_sarcoma_before_45) ){
-			this.unfiltered_answers.push( ONCOLOGIST );
 		}
 	}
 
 	analyze_cervical_cancer( what_sex, how_old, type_of_cancer ){
 		// If women
-		if( what_sex == 'female'){
+		if( what_sex == 'female' ){
 			// If > 70
 			if( how_old != '70 - 75' || how_old != '> 75' ){
 				this.unfiltered_answers.push( PAP2 );
@@ -333,7 +358,7 @@ export class ResultsComponent implements OnInit {
 		}
 	}
 
-	filter_answers(){
+	filter_answers( what_sex ){
 		// filter duplicate
 		let filtered_answers = [];
 		for( var i = 0; i < this.unfiltered_answers.length; i++ ){
@@ -348,7 +373,7 @@ export class ResultsComponent implements OnInit {
 			}
 		}
 
-		this.compile_answers( filtered_answers );
+		this.compile_answers( what_sex, filtered_answers );
 	}
 
 
@@ -376,60 +401,20 @@ export class ResultsComponent implements OnInit {
 	}
 
 
-	compile_answers( filtered_array ){
-		this.sort_the_answers( filtered_array ).then(sorted_answer => {
+	compile_answers( what_sex, filtered_array ){
+		// this.sort_the_answers( filtered_array ).then(sorted_answer => {
+			console.log(filtered_array);
 			let results = [];
-			for (var i = 0; i < sorted_answer.length; i++) {
-				switch( sorted_answer[i] ){
-					case 'GENERAL_MEN':
-						this.answer_text = this.answer_text + GENERAL_MEN.text;
-						break;
-					case 'GENERAL_MEN_END':
-						this.answer_text = this.answer_text + GENERAL_MEN_END.text;
-						break;
-					case 'GENERAL_WOMEN':
-						this.answer_text = this.answer_text + GENERAL_WOMEN.text;
-						break;
-					case 'GENERAL_WOMEN_END':
-						this.answer_text = this.answer_text + GENERAL_WOMEN_END.text;
-						break;
-					case 'FOBT':
-						this.answer_text = this.answer_text + FOBT.text;
-						break;
-					case 'COLOSCOPY5':
-						this.answer_text = this.answer_text + COLOSCOPY5.text;
-						break;
-					case 'COLOSCOPY1':
-						this.answer_text = this.answer_text + COLOSCOPY1.text;
-						break;
-					case 'EXAM24':
-						this.answer_text = this.answer_text + EXAM24.text;
-						break;
-					case 'EXAM6':
-						this.answer_text = this.answer_text + EXAM6.text;
-						break;
-					case 'MAMOGRAPH1':
-						this.answer_text = this.answer_text + MAMOGRAPH1.text;
-						break;
-					case 'MAMOGRAPH2':
-						this.answer_text = this.answer_text + MAMOGRAPH2.text;
-						break;
-					case 'ONCOLOGIST':
-						this.answer_text = this.answer_text + ONCOLOGIST.text;
-						break;
-					case 'PAP2':
-						this.answer_text = this.answer_text + PAP2.text;
-						break;
-					case 'SEEK_EXPERT':
-						this.answer_text = this.answer_text + SEEK_EXPERT.text;
-						break;
-					case 'NONE':
-						this.answer_text = this.answer_text + '<li>You do not need to do any additional screening tests.</li>';
-						break;
-					default:
-						break;
-				}
+			for (var i = 0; i < filtered_array.length; i++) {
+				console.log(this.answer_text);
+				this.answer_text += filtered_array[i].text;
 			}
-		});
+
+			if( what_sex == 'female' ){
+				this.answer_text += GENERAL_WOMEN_END.text;
+			}else{
+				this.answer_text += GENERAL_MEN_END.text;
+			}
+		// });
 	}
 }
